@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-    const socket = io();
+    const socket = io("https://chi-li-tu-li.onrender.com");
 
     // --- DOM ELEMENTS ---
     const elements = {
