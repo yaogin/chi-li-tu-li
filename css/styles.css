@@ -1,0 +1,254 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+html {
+    font-size: 16px;
+}
+body {
+    font-family: 'Microsoft Yahei', sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 10px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Home Page Styles */
+.home-container {
+    /* 你的主页样式，这里留空以保持不变 */
+}
+
+/* --- Top Navigation (Game Pages) - 最终修复版 --- */
+.top-nav {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+    min-height: 40px;
+}
+.back-btn, .new-game-btn {
+    padding: 0.625em 1.25em;
+    background: linear-gradient(to bottom, #8B5A2B, #A0522D);
+    color: #F5F5DC;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 0 2px #000;
+    z-index: 5; /* 确保按钮在标题上层 */
+    position: relative; /* 使得z-index生效 */
+}
+.back-btn:hover, .new-game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.page-title {
+    position: absolute;
+    left: 0; /* 从左边开始 */
+    right: 0; /* 到右边结束 */
+    top: 50%;
+    transform: translateY(-50%); /* 只做垂直居中 */
+    
+    font-size: 1.9em;
+    color: #8B4513;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    
+    /* --- 核心修复 --- */
+    text-align: center; /* 文本居中 */
+    padding: 0 110px;   /* 关键：在左右留出巨大内边距，为按钮腾出空间 */
+    white-space: normal; /* 允许文本在需要时自动换行 */
+    line-height: 1.1;    /* 调整行高，防止换行后文字重叠 */
+    word-break: break-all; /* 在极端情况下，允许单词内断开 */
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.5em; /* 在小屏幕上适当缩小字体 */
+        padding: 0 90px; /* 相应地缩小内边距 */
+    }
+}
+
+/* Main Content & Board */
+.game-layout {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main-container {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+.board-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 80px; 
+    touch-action: manipulation;
+}
+.board-anchor {
+    position: relative;
+    width: 90vw;
+    aspect-ratio: 1 / 1;
+    max-width: 500px;
+    max-height: 500px;
+    background: linear-gradient(135deg, #D2B48C, #C19A6B);
+    border: 5px solid #8B4513;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    overflow: visible;
+}
+
+/* SVG Game Elements */
+.selected { stroke: #FFD700; stroke-width: 3px; filter: drop-shadow(0 0 3px rgba(255,215,0,0.5)); }
+.highlight { fill: rgba(255, 215, 0, 0.5); }
+.grid-point { fill: transparent; cursor: pointer; }
+.piece { cursor: pointer; }
+.turn-indicator { r: 7px; visibility: hidden; }
+.turn-indicator.selected { stroke: #FFD700; stroke-width: 3px; filter: drop-shadow(0 0 5px #FFD700); visibility: visible; }
+
+/* Popups & Prompts */
+.end-turn-box {
+    visibility: hidden;
+    cursor: pointer;
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #8B4513;
+    border: 3px solid #FFD700;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #FFF8DC, #F5DEB3);
+    text-shadow: 1px 1px 2px #FFF;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+.init-panel, .rematch-prompt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.98);
+    border: 2px solid #d4a373;
+    border-radius: 12px;
+    padding: 25px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    text-align: center;
+}
+.init-button, .rematch-button {
+    padding: 12px 24px;
+    background: #fff8f0;
+    border: 2px solid #d4a373;
+    border-radius: 8px;
+    font-size: 1.1em;
+    color: #4a2c0b;
+    cursor: pointer;
+    width: 130px;
+}
+.init-panel input {
+    padding: 10px;
+    font-size: 1.1em;
+    text-align: center;
+    border: 2px solid #d4a373;
+    border-radius: 8px;
+    width: 150px;
+    text-transform: uppercase;
+    background-color: #fff;
+    color: #4a2c0b;
+}
+.init-panel input::placeholder {
+    color: #a08c72;
+}
+.rematch-prompt-text {
+    font-size: 1.2em;
+    color: #4a2c0b;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.rematch-buttons {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+.win-box, .message-box {
+    font-family: 'Microsoft Yahei', '黑体', sans-serif;
+    font-size: 32px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 3px;
+    fill: #8B4513;
+    stroke: #FFD700;
+    stroke-width: 2px;
+    paint-order: stroke;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.8s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Chat Box Styles */
+.chat-box {
+    visibility: hidden;
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.chat-box input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 2px solid #bda27e;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+}
+.chat-box button {
+    padding: 10px 20px;
+    background: linear-gradient(to bottom, #8B5A2B, #A0522D);
+    color: #F5F5DC;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}

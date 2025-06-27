@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>吃粒吐粒 - AI对战</title>
+<link rel="stylesheet" href="css/styles.css">
+<!-- 修复对称问题的专属CSS -->
+<style>
+    .init-panel {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+</head>
+<body>
+<div class="game-layout">
+    <div class="top-nav">
+        <button class="back-btn" onclick="window.location.href='index.html'">返回主页</button>
+        <button class="new-game-btn" id="ai-new-game-btn">重新开始</button>
+        <div class="page-title">AI对战</div>
+    </div>
+    <div class="board-container">
+        <div class="board-anchor">
+            <svg width="100%" height="100%" viewBox="-50 -50 500 500">
+                <g stroke="#3A281E" stroke-width="2">
+                    <line x1="0" y1="0" x2="0" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="300" y1="0" x2="300" y2="400"/><line x1="400" y1="0" x2="400" y2="400"/>
+                    <line x1="0" y1="0" x2="400" y2="0"/><line x1="0" y1="100" x2="400" y2="100"/><line x1="0" y1="200" x2="400" y2="200"/><line x1="0" y1="300" x2="400" y2="300"/><line x1="0" y1="400" x2="400" y2="400"/>
+                    <line x1="0" y1="0" x2="400" y2="400"/><line x1="0" y1="400" x2="400" y2="0"/>
+                    <line x1="0" y1="200" x2="200" y2="0"/><line x1="0" y1="200" x2="200" y2="400"/>
+                    <line x1="400" y1="200" x2="200" y2="0"/><line x1="400" y1="200" x2="200" y2="400"/>
+                </g>
+                <g id="grid-points"></g>
+                <g id="pieces"></g>
+                <g id="turn-indicators">
+                    <circle class="turn-indicator" id="turn-indicator-top"></circle>
+                    <circle class="turn-indicator" id="turn-indicator-bottom"></circle>
+                </g>
+                <text class="win-box" x="200" y="200" visibility="hidden" id="win-box">
+                    <tspan class="win-box-text"></tspan>
+                </text>
+            </svg>
+        </div>
+        <div class="init-panel" id="ai-init-panel">
+            <button class="init-button" id="ai-first" style="width: 130px;">AI先行</button>
+            <button class="init-button" id="human-first" style="width: 130px;">人类先行</button>
+        </div>
+        <div class="end-turn-box">结束吃子</div>
+    </div>
+</div>
+<!-- 链接到分离后的JS文件 -->
+<script src="script/ai_game.js"></script>
+</body>
+</html>

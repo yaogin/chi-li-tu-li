@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>吃粒吐粒 - 主页</title>
+<!-- 再次引入谷歌字体，这次选择一个更圆润可爱的字体 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+    /* 全局样式重置 */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* 主体和背景设置 */
+    body {
+        font-family: 'Microsoft Yahei', sans-serif;
+        /* 使用明亮的线性渐变背景 */
+        background: linear-gradient(135deg, #a8e063, #56ab2f); /* 清新的绿色渐变 */
+        /* background: linear-gradient(135deg, #89f7fe, #66a6ff); */ /* 或选择清爽的蓝色渐变 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden; /* 隐藏溢出的装饰棋子 */
+        position: relative; /* 为装饰元素提供定位锚点 */
+    }
+
+    /* 主内容容器 */
+    .hero-container {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 40px;
+        /* 加载动画 */
+        animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    }
+
+    /* 游戏标题，卡通风格 */
+    h1 {
+        font-family: 'ZCOOL KuaiLe', cursive; /* 使用圆润的艺术字体 */
+        font-size: 7rem;
+        color: #fff;
+        text-shadow: 
+            /* 顶部高光 */
+            0 2px 2px rgba(255, 255, 255, 0.6),
+            /* 底部深色阴影，营造立体感 */
+            0 -3px 4px rgba(0, 0, 0, 0.25),
+            /* 整体外阴影 */
+            5px 8px 15px rgba(0, 0, 0, 0.3);
+        margin-bottom: 40px;
+    }
+    
+    /* 按钮容器 */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        /* 延迟加载动画 */
+        animation: fadeIn 1s 0.5s ease-out forwards;
+        opacity: 0;
+    }
+
+    /* 导航按钮，果冻/卡通风格 */
+    .nav-button {
+        padding: 18px 35px;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333; /* 深色文字以保证可读性 */
+        background: #f1c40f; /* 明亮的黄色 */
+        border: none;
+        border-radius: 50px; /* 圆润的胶囊形状 */
+        cursor: pointer;
+        transition: all 0.2s ease-out;
+        box-shadow: 0 8px 0 #daa520, 0 12px 20px rgba(0,0,0,0.3); /* 模拟3D厚度效果 */
+        text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+    }
+
+    /* 按钮按下的效果 */
+    .nav-button:active {
+        transform: translateY(5px); /* 向下移动，模拟被按下 */
+        box-shadow: 0 3px 0 #daa520, 0 6px 10px rgba(0,0,0,0.4);
+    }
+    
+    /* 定义加载动画 */
+    @keyframes popIn {
+        from { transform: scale(0.5); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    /* --- 背景装饰：动态漂浮的棋子 --- */
+    .floating-piece {
+        position: absolute;
+        border-radius: 50%;
+        box-shadow: inset 0 0 15px rgba(255,255,255,0.5), 0 10px 25px rgba(0,0,0,0.2);
+        /* 上下浮动动画 */
+        animation: float 6s ease-in-out infinite;
+        transition: transform 0.5s ease-out; /* 鼠标交互时的平滑过渡 */
+    }
+    .p1 { width: 80px; height: 80px; background: #fff; top: 15%; left: 10%; animation-duration: 7s; }
+    .p2 { width: 50px; height: 50px; background: #000; top: 20%; right: 12%; animation-duration: 5s; animation-delay: 1s; }
+    .p3 { width: 100px; height: 100px; background: #000; bottom: 10%; left: 20%; animation-duration: 8s; animation-delay: 0.5s; }
+    .p4 { width: 60px; height: 60px; background: #fff; bottom: 15%; right: 25%; animation-duration: 6s; }
+    .p5 { width: 40px; height: 40px; background: #fff; top: 60%; left: 30%; animation-duration: 9s; animation-delay: 1.5s; }
+    .p6 { width: 70px; height: 70px; background: #000; top: 55%; right: 40%; animation-duration: 7s; }
+
+
+    /* 定义浮动动画 */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 5rem;
+        }
+        .nav-button {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+        }
+        /* 在小屏幕上减少装饰棋子数量以提高性能 */
+        .p5, .p6 { display: none; }
+    }
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 3.5rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- 背景装饰元素 -->
+    <div class="floating-piece p1"></div>
+    <div class="floating-piece p2"></div>
+    <div class="floating-piece p3"></div>
+    <div class="floating-piece p4"></div>
+    <div class="floating-piece p5"></div>
+    <div class="floating-piece p6"></div>
+
+    <!-- 主内容 -->
+    <div class="hero-container">
+        <h1>吃粒吐粒</h1>
+        <div class="button-group">
+            <button class="nav-button" onclick="window.location.href='ai_vs_ai.html'">AI 对战</button>
+            <button class="nav-button" onclick="window.location.href='online_game.html'">联网对战</button>
+        </div>
+    </div>
+
+<script>
+    // 鼠标交互：让背景棋子跟随鼠标轻微移动
+    document.addEventListener('mousemove', function(e) {
+        const pieces = document.querySelectorAll('.floating-piece');
+        const moveX = (e.clientX - window.innerWidth / 2) * -0.01; // X轴移动量
+        const moveY = (e.clientY - window.innerHeight / 2) * -0.01; // Y轴移动量
+
+        pieces.forEach(piece => {
+            // 使用 a dataset value to control the parallax strength if you want
+            // e.g. <div class="floating-piece p1" data-speed="2"></div>
+            const speed = parseFloat(piece.dataset.speed || 1);
+            piece.style.transform = `translateX(${moveX * speed}px) translateY(${moveY * speed}px)`;
+        });
+    });
+</script>
+
+</body>
+</html>
